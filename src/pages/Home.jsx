@@ -1,29 +1,27 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Card from '../components/Card';
 import Circle from '../components/Circle';
 
-import { fetchRandom, fetchLast } from '../redux/actions/meal';
+import { fetchRandom } from '../actions/meal';
+import { fetchLast } from '../actions/last';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const anchorRef = useRef();
 
   const [scrollBtnVisible, setScrollBtnVisible] = useState(false);
 
   const isLoading = useSelector(({ meal }) => meal.isLoading);
   const random = useSelector(({ meal }) => meal.random);
-  const last = useSelector(({ meal }) => meal.last);
+  const last = useSelector(({ last }) => last);
 
   const onLoad = useCallback(() => {
     dispatch(fetchRandom());
     dispatch(fetchRandom());
     dispatch(fetchRandom());
   }, [dispatch])
-
-  const onScrollUp = () => window.scrollTo(0, 0);
 
   const loadOnScroll = useCallback(() => {
     const scroll = window.pageYOffset + document.documentElement.clientHeight;
@@ -42,6 +40,8 @@ const Home = () => {
     checkPageScroll();
   }, [loadOnScroll, checkPageScroll])
 
+  const onScrollUp = () => window.scrollTo(0, 0);
+
   useEffect(() => {
     dispatch(fetchLast());
     onLoad();
@@ -57,12 +57,12 @@ const Home = () => {
     <section className="home">
       <div className="home__container container">
         {last && last.length > 0 && (
-          <div className="last">
+          <div className="home__last last">
             <h2 className="last__title">Последние рецепты</h2>
             <ul className="last__list">
               {last.map(meal => (
                 <li key={meal._id} className="last__item">
-                  <Link to={`/meals/${meal._id}`} className="last__link">
+                  <Link to={`/meal/${meal._id}`} className="last__link">
                     <Circle img={meal.img} name={meal.name} />
                   </Link>
                 </li>
@@ -70,7 +70,7 @@ const Home = () => {
             </ul>
           </div>
         )}
-        <div className="random">
+        <div className="home__random random">
           <ul className="random__list">
             {random && random.map((card, index) => (
               <li key={`${card.id}_${index}`} className="random__item">
@@ -80,7 +80,6 @@ const Home = () => {
           </ul>
           {isLoading && 'Загрузка...'}
         </div>
-        <div ref={anchorRef} className="home__anchor" />
       </div>
       {scrollBtnVisible && <button onClick={onScrollUp} className="home__up" />}
     </section>

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import NewLabel from '../components/NewLabel';
 
-import { fetchCreateMeal } from '../redux/actions/meal';
+import { fetchCreateMeal } from '../actions/own';
 
 const New = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const token = useSelector(({ user }) => user.token);
 
@@ -23,21 +25,14 @@ const New = () => {
     source: ''
   }
 
+  const [form, setForm] = useState(initialForm);
   const [modal, setModal] = useState(null);
-  const [form, setForm] = useState(initialForm)
 
   const onInputChange = e => setForm({ ...form, [e.target.name]: e.target.value});
 
   const onTagsChange = e => {
     const tags = e.target.value.split(',').map(tag => tag.trim());
     setForm({ ...form, tags });
-  }
-
-  const onOverlayClick = e => {
-    const onOpenBtnClick = e.target.closest('[data-open-modal]');
-    const onInsideClick = e.target.closest('.modal__form');
-    const onCloseBtnClick = e.target.closest('.modal__close');
-    ((!onOpenBtnClick && !onInsideClick) || onCloseBtnClick) && setModal(null);
   }
 
   const onAddIngredient = e => {
@@ -88,6 +83,25 @@ const New = () => {
     setForm(newForm);
   }
 
+  const onCreate = e => {
+    e.preventDefault();
+    dispatch(fetchCreateMeal(form, token));
+    setForm(initialForm);
+    history.push('/own');
+  }
+
+  const onOverlayClick = e => {
+    const onOpenBtnClick = e.target.closest('[data-open-modal]');
+    const onInsideClick = e.target.closest('.modal__form');
+    const onCloseBtnClick = e.target.closest('.modal__close');
+    ((!onOpenBtnClick && !onInsideClick) || onCloseBtnClick) && setModal(null);
+  }
+
+  useEffect(() => {
+    document.body.addEventListener('click', onOverlayClick);
+    return () => document.body.removeEventListener('click', onOverlayClick);
+  }, []);
+
   const labels = [
     { title: 'URL изображения', isRequired: true, onChange: onInputChange, value: form.img, name: 'img' },
     { title: 'Название', isRequired: true, onChange: onInputChange, value: form.name, name: 'name' },
@@ -95,17 +109,6 @@ const New = () => {
     { title: 'Категория', isRequired: true, onChange: onInputChange, value: form.category, name: 'category' },
     { title: 'Теги через запятую', onChange: onTagsChange, value: form.tags, name: 'tags' }
   ]
-
-  const onCreate = e => {
-    e.preventDefault();
-    dispatch(fetchCreateMeal(form, token));
-    setForm(initialForm);
-  }
-
-  useEffect(() => {
-    document.body.addEventListener('click', onOverlayClick);
-    return () => document.body.removeEventListener('click', onOverlayClick);
-  }, []);
 
   return (
     <section className="new">

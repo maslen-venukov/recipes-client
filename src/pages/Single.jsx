@@ -5,7 +5,9 @@ import queryString from 'query-string';
 
 import Tags from '../components/Tags';
 
-import { fetchCurrentMeal, setCurrentMeal, fetchRemoveMeal, fetchRemoveFavorite, fetchAddFavorite } from '../redux/actions/meal';
+import { fetchCurrentMeal, setCurrentMeal } from '../actions/meal';
+import { fetchRemoveMeal } from '../actions/own';
+import { fetchRemoveFavorite, fetchAddFavorite } from '../actions/favorites';
 
 const Single = () => {
   const dispatch = useDispatch();
@@ -16,10 +18,10 @@ const Single = () => {
   const [youtubePreview, setYoutubePreview] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const isLoading = useSelector(({ meal }) => meal.isLoading);
-  const currentMeal = useSelector(({ meal }) => meal.currentMeal);
   const currentUser = useSelector(({ user }) => user.currentUser);
-  const favorites = useSelector(({ meal }) => meal.favorites);
+  const currentMeal = useSelector(({ meal }) => meal.currentMeal);
+  const isLoading = useSelector(({ meal }) => meal.isLoading);
+  const favorites = useSelector(({ favorites }) => favorites);
   const token = useSelector(({ user }) => user.token);
 
   useEffect(() => {
@@ -34,8 +36,9 @@ const Single = () => {
   }, [currentMeal])
 
   useEffect(() => {
-    currentMeal && favorites && favorites.forEach(favorite => favorite.meal._id === currentMeal._id ? setIsFavorite(true) : setIsFavorite(false));
-  }, [currentMeal, favorites])
+    const isFinded = favorites && !!favorites.find(favorite => favorite.meal._id === id);
+    setIsFavorite(isFinded);
+  }, [favorites, id])
 
   const onRemove = () => {
     if(window.confirm('Вы действительно хотите удалить рецепт?')) {
@@ -45,15 +48,22 @@ const Single = () => {
   }
 
   const handleFavorite = () => {
-    if(isFavorite) {
-      if(window.confirm('Вы действительно хотите удалить рецепт из избранного?')) {
-        const favoriteId = favorites.find(favorite => favorite.meal._id === id)._id;
-        dispatch(fetchRemoveFavorite(favoriteId));
-      }
-    } else {
-      if(window.confirm('Вы действительно хотите добавить рецепт в избранное?')) {
-        dispatch(fetchAddFavorite(id, token));
-      }
+    switch (isFavorite) {
+      case true:
+        if(window.confirm('Вы действительно хотите удалить рецепт из избранного?')) {
+          const favoriteId = favorites.find(favorite => favorite.meal._id === id)._id;
+          dispatch(fetchRemoveFavorite(favoriteId));
+        }
+        break;
+
+      case false:
+        if(window.confirm('Вы действительно хотите добавить рецепт в избранное?')) {
+          dispatch(fetchAddFavorite(id, token));
+        }
+        break;
+
+      default:
+        break;
     }
   }
 
@@ -80,7 +90,7 @@ const Single = () => {
               <img src={currentMeal.img} alt={currentMeal.name} />
             </div>
 
-            {currentUser && (currentUser.id !== currentMeal.user.id) && (
+            {currentUser && currentMeal.user && currentUser.id !== currentMeal.user.id && (
               <button onClick={handleFavorite} className="single__favorites btn">
                 {isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
               </button>

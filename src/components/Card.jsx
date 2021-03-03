@@ -9,12 +9,12 @@ const Card = ({ id, img, name, category, area, tags, instructions, ingredients, 
 
   return (
     <article className="card">
-      <Link to={`/meals/${id}`} className="card__img">
+      <Link to={`/meal/${id}`} className="card__img">
         <img src={img} alt={name}/>
       </Link>
       <div className="card__body">
         <h2 className="card__title">
-          <Link to={`/meals/${id}`}>{name}</Link>
+          <Link to={`/meal/${id}`}>{name}</Link>
           {user && (
             <button className="card__like">
               <svg viewBox="0 0 512 452" xmlns="http://www.w3.org/2000/svg">

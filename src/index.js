@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import App from './App';
 
-import store from './redux/store';
+import store from './store';
 
 import './assets/sass/index.sass';
 

@@ -12,8 +12,9 @@ import Favorites from './pages/Favorites';
 
 import Header from './components/Header';
 
-import { auth } from './redux/actions/user';
-import { fetchOwn, fetchFavorites } from './redux/actions/meal';
+import { auth } from './actions/user';
+import { fetchOwn } from './actions/own';
+import { fetchFavorites } from './actions/favorites';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,18 +33,27 @@ const App = () => {
     token && dispatch(fetchFavorites(token));
   }, [dispatch, token])
 
+  const routes = {
+    user: [
+      { path: '/favorites', component: Favorites },
+      { path: '/new', component: New },
+      { path: '/own', component: Own },
+    ],
+    auth: [
+      { path: '/login', component: Login },
+      { path: '/register', component: Register }
+    ]
+  }
+
   return isReady && (
     <>
       <Header />
       <main className="main">
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/meals/:id" component={Single} />
-          {user && <Route path="/favorites" component={Favorites} />}
-          {user && <Route path="/new" component={New} />}
-          {user && <Route path="/own" component={Own} /> }
-          {!user && <Route path="/login" component={Login} />}
-          {!user && <Route path="/register" component={Register} />}
+          <Route path="/meal/:id" component={Single} />
+          {user && routes.user.map(route => <Route key={route.path} path={route.path} component={route.component} />)}
+          {!user && routes.auth.map(route => <Route key={route.path} path={route.path} component={route.component} />)}
           <Redirect to="/" />
         </Switch>
       </main>

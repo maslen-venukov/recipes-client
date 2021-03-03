@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Cell from '../components/Cell';
 
 const Own = () => {
-  const own = useSelector(({ meal }) => meal.own);
+  const own = useSelector(({ own }) => own);
 
   return (
     <section className="own">
@@ -19,13 +19,13 @@ const Own = () => {
               ? <ul className="own__list">
                 {own.map(meal => (
                   <li key={meal._id} className="own__item">
-                    <Link to={`/meals/${meal._id}`} className="own__link">
+                    <Link to={`/meal/${meal._id}`} className="own__link">
                       <Cell img={meal.img} name={meal.name} />
                     </Link>
                   </li>
                 ))}
               </ul>
-              : 'Список рецептов пуст'
+              : 'Список ваших рецептов пуст'
             : 'Загрузка...'}
       </div>
     </section>

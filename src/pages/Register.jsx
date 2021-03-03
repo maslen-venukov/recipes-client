@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import { register } from '../redux/actions/user';
+import { register } from '../actions/user';
 
 const Register = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [form, setForm] = useState({
     login: '',
@@ -17,6 +19,7 @@ const Register = () => {
   const onRegister = e => {
     e.preventDefault();
     dispatch(register(form.login, form.password, form.passwordCheck));
+    history.goBack();
   }
 
   return (

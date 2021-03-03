@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { logout } from '../redux/actions/user';
+import { logout } from '../actions/user';
 
 import logo from '../assets/img/logo.svg';
 
@@ -35,10 +35,12 @@ const Header = () => {
           <img src={logo} alt="Логотип" />
           Yo` Recipes
         </Link>
+
         <div className="header__auth">
           {!user && <Link to="/login" className="header__login">Войти</Link>}
           {!user && <Link to="/register" className="header__register">Зарегистрироваться</Link>}
         </div>
+
         {user && (
           <div ref={userElRef} onClick={onTogglePopup} className="header__user user">
             <button className={`user__btn ${isPopupOpen ? 'active' : ''}`}>{user.login}</button>

@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import Cell from '../components/Cell';
 
 const Favorites = () => {
-  const favorites = useSelector(({ meal }) => meal.favorites);
+  const favorites = useSelector(({ favorites }) => favorites);
+
   return (
     <section className="favorites">
       <div className="favorites__container container">
@@ -17,13 +18,13 @@ const Favorites = () => {
             ? <ul className="favorites__list">
               {favorites.map(favorite => (
                 <li key={favorite._id} className="favorites__item">
-                  <Link to={`/meals/${favorite.meal._id}`} className="favorites__link">
+                  <Link to={`/meal/${favorite.meal._id}`} className="favorites__link">
                     <Cell img={favorite.meal.img} name={favorite.meal.name} />
                   </Link>
                 </li>
               ))}
             </ul>
-            : 'Список рецептов пуст'
+            : 'Список избранных рецептов пуст'
           : 'Загрузка...'}
       </div>
     </section>
