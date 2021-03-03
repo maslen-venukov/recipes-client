@@ -1,0 +1,80 @@
+.header
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 100
+  width: 100vw
+  font-weight: 700
+  color: #fff
+  background-color: $accent
+  box-shadow: $shadow
+  padding: 1rem 0
+  &__container
+    max-width: 120rem
+    display: flex
+    justify-content: space-between
+    align-items: center
+  &__auth
+    display: flex
+    align-items: center
+  &__login
+    margin-right: 1rem
+  &__logout
+    color: inherit
+    font-weight: inherit
+
+.logo
+  display: flex
+  align-items: center
+  font-size: 1.8rem
+  img
+    width: 3rem
+    height: 3rem
+    margin-right: 1rem
+
+.user
+  position: relative
+  height: 3rem
+  display: flex
+  align-items: center
+  &__btn
+    position: relative
+    font-size: 1.8rem
+    font-weight: 700
+    color: #fff
+    padding: 0 1.75rem 0 2rem
+    &::before,
+    &::after
+      content: ''
+      position: absolute
+    &::before
+      left: 0
+      bottom: .1rem
+      display: block
+      width: 1.5rem
+      height: 1.5rem
+      background: url(../../img/icons/user.svg) center / cover no-repeat
+    &::after
+      top: 50%
+      right: 0
+      transform: translateY(-50%)
+      width: 1rem
+      height: calc(1rem / 1.5)
+      background: url(../../img/icons/angle-down.svg) center / cover no-repeat
+    &.active
+      &::after
+        transform: translateY(-50%) rotate(180deg)
+  &__popup
+    position: absolute
+    top: 100%
+    right: 0
+    z-index: 200
+    width: 13rem
+    text-align: right
+    background-color: lighten($accent, 2%)
+    box-shadow: $shadow
+    border-radius: .5rem
+    padding: 1rem
+    &-item
+      &:not(:last-child)
+        margin-bottom: .5rem

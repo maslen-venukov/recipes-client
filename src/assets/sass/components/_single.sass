@@ -1,0 +1,62 @@
+.single
+  padding-bottom: 2rem
+  &__header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 1.2rem
+  &__title
+    margin-bottom: 0
+  &__edit
+    margin-right: 1rem
+  &__img
+    box-shadow: $shadow
+    margin-bottom: 1rem
+    img
+      width: 100%
+      border-radius: 1rem
+  &__info
+    margin-bottom: .25rem
+  &__tags
+    margin-bottom: .35rem
+  &__instructions
+    margin-bottom: .5rem
+    p
+      &:not(:last-child)
+        margin-bottom: .35rem
+  &__caption
+    font-size: 2rem
+    margin-bottom: .35rem
+  &__ingredients,
+  &__measures,
+  &__favorites
+    margin-bottom: .5rem
+  &__video
+    position: relative
+    display: block
+    width: 100%
+    height: 0
+    padding-bottom: 56.25%
+    box-shadow: $shadow
+    margin-bottom: .5rem
+    &::before
+      content: ''
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      width: 8rem
+      height: 8rem
+      z-index: 1
+      background: url(../../img/icons/youtube.svg) center / cover no-repeat
+    img
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      border-radius: 1rem
+  &__source
+    a
+      color: blue
+      text-decoration: underline

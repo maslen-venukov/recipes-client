@@ -1,0 +1,32 @@
+.own
+  &__header
+    display: flex
+    justify-content: space-between
+    margin-bottom: 2.4rem
+  &__title
+    margin-bottom: 0
+  &__list
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    grid-gap: 3rem
+
+.cell
+  text-align: center
+  padding: 1.5rem
+  box-shadow: $shadow
+  border-radius: 1rem
+  &__thumb
+    position: relative
+    width: 100%
+    padding-bottom: 100%
+    border-radius: 50%
+    overflow: hidden
+    margin-bottom: .5rem
+    img
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+  &__name
+    font-size: 2rem

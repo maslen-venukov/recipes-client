@@ -1,0 +1,96 @@
+.home
+  &__up
+    position: fixed
+    bottom: 2rem
+    right: 2rem
+    width: 5rem
+    height: 5rem
+    background-color: $accent
+    border-radius: 50%
+    &::after
+      content: ''
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      width: 2rem
+      height: 2rem
+      background: url(../../img/icons/arrow-up.svg) center / cover no-repeat
+
+.card
+  box-shadow: $shadow
+  border-radius: 1rem
+  overflow: hidden
+  &__img
+    position: relative
+    display: block
+    width: 100%
+    height: 0
+    padding-bottom: 100%
+    img
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+  &__body
+    padding: 1rem
+  &__title
+    position: relative
+    font-size: 2rem
+    padding-right: 4rem
+    margin-bottom: .25rem
+  &__like
+    position: absolute
+    top: 0
+    right: 0
+    width: 3rem
+    height: 3rem
+    fill: transparent
+    stroke: #ccc
+    transition: fill .2s, stroke .2s
+    &--liked
+      fill: $accent
+      stroke: $accent
+  &__info
+    margin-bottom: .25rem
+
+.circle
+  width: 6rem
+  height: 6rem
+  border-radius: 50%
+  overflow: hidden
+  box-shadow: $shadow
+  img
+    width: 100%
+    height: 100%
+
+.last
+  box-shadow: $shadow
+  border-radius: 1rem
+  margin-bottom: 1.5rem
+  &__title
+    font-size: 2rem
+    padding: .5rem 0 0 1rem
+  &__list
+    display: flex
+    padding: 1rem 0
+    overflow-x: auto
+  &__item
+    margin-right: 1rem
+    &:first-child
+      margin-left: 1rem
+    &:last-child
+      display: flex
+      &::after
+        content: ''
+        width: 1rem
+
+.random
+  padding-bottom: 1rem
+  &__list
+    overflow-anchor: none
+  &__item
+    margin-bottom: 3rem
+    &:last-child
+      margin-bottom: 1rem

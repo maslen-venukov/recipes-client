@@ -1,0 +1,58 @@
+.new
+  padding-bottom: 1.5rem
+  &__form
+    display: flex
+    flex-direction: column
+  &__label
+    display: flex
+    flex-direction: column
+    margin-bottom: 1rem
+    em
+      font-style: normal
+      color: red
+  &__caption
+    font-size: 2rem
+    margin-bottom: .8rem
+  &__ingredients
+    margin-bottom: 1.2rem
+    &-list
+      margin-bottom: .8rem
+    &-item
+      display: flex
+      align-items: center
+      &:not(:last-child)
+        margin-bottom: .4rem
+    &-text
+      margin-right: 1rem
+    &-actions
+      display: flex
+      justify-content: center
+    &-add
+      display: block
+      width: 6rem
+      height: 3rem
+      border-radius: 2.5rem
+      background: $accent url(../../img/icons/plus.svg) center / 1.4rem no-repeat
+  &__instructions
+    margin-bottom: 1.2rem
+    &-list
+      margin-bottom: .8rem
+    &-item
+      display: flex
+      align-items: center
+      flex-wrap: wrap
+      counter-increment: index
+      &:not(:last-child)
+        margin-bottom: .4rem
+      &::before
+        content: 'Шаг ' counter(index)
+        width: 100%
+        font-size: 1.8rem
+    &-text
+      margin-right: 1rem
+    &-add
+      display: block
+      width: 6rem
+      height: 3rem
+      border-radius: 2.5rem
+      background: $accent url(../../img/icons/plus.svg) center / 1.4rem no-repeat
