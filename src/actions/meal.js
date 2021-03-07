@@ -32,5 +32,3 @@ export const fetchCurrentMeal = id => dispatch => {
     .catch(e => console.log(e))
     .finally(() => dispatch(setLoading(false)))
 }
-
-// TODO выделить свои, последние и избранные блюда, как отдельные сущности в редаксе + на сервере сделать им отдельные роуты

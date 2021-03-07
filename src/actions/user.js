@@ -14,21 +14,25 @@ export const logout = () => ({
   type: 'LOGOUT'
 })
 
-export const login = (login, password) => dispatch => {
+export const login = (login, password, cb) => dispatch => {
   axios.post('/api/users/login', {
     login, password
   })
-    .then(({ data }) => dispatch(setUser(data)))
+    .then(({ data }) => {
+      dispatch(setUser(data));
+      cb();
+    })
     .catch(e => alert(e.response.data.message))
 }
 
-export const register = (login, password, passwordCheck) => dispatch => {
+export const register = (login, password, passwordCheck, cb) => dispatch => {
   axios.post('/api/users/register', {
     login, password, passwordCheck
   })
     .then(({ data }) => {
       dispatch(setUser(data));
       alert(data.message);
+      cb();
     })
     .catch(e => alert(e.response.data.message))
 }

@@ -15,7 +15,7 @@ const Home = () => {
 
   const isLoading = useSelector(({ meal }) => meal.isLoading);
   const random = useSelector(({ meal }) => meal.random);
-  const last = useSelector(({ last }) => last);
+  const last = useSelector(({ meal }) => meal.last);
 
   const onLoad = useCallback(() => {
     dispatch(fetchRandom());
@@ -56,6 +56,7 @@ const Home = () => {
   return (
     <section className="home">
       <div className="home__container container">
+
         {last && last.length > 0 && (
           <div className="home__last last">
             <h2 className="last__title">Последние рецепты</h2>
@@ -70,6 +71,7 @@ const Home = () => {
             </ul>
           </div>
         )}
+
         <div className="home__random random">
           <ul className="random__list">
             {random && random.map((card, index) => (
@@ -80,6 +82,7 @@ const Home = () => {
           </ul>
           {isLoading && 'Загрузка...'}
         </div>
+
       </div>
       {scrollBtnVisible && <button onClick={onScrollUp} className="home__up" />}
     </section>

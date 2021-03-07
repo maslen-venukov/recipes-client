@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { SET_OWN, CREATE_MEAL, REMOVE_MEAL } from '../reducers/own';
+import { SET_OWN, CREATE_MEAL, REMOVE_MEAL, UPDATE_MEAL } from '../reducers/own';
 
 const setOwn = payload => ({
   type: SET_OWN,
@@ -17,6 +17,11 @@ const removeMeal = payload => ({
   payload
 })
 
+const updateMeal = payload => ({
+  type: UPDATE_MEAL,
+  payload
+})
+
 export const fetchOwn = token => dispatch => {
   axios.get('/api/own', {
     headers: { Authorization: token }
@@ -25,19 +30,34 @@ export const fetchOwn = token => dispatch => {
     .catch(e => console.log(e))
 }
 
-export const fetchCreateMeal = (meal, token) => dispatch => {
-  axios.post('/api/own', meal, {
+export const fetchCreateMeal = (formData, token, cb) => dispatch => {
+  axios.post('/api/own', formData, {
     headers: { Authorization: token }
   })
     .then(({ data }) => {
       alert('Рецепт успешно создан');
       dispatch(createMeal(data));
+      cb();
     })
-    .catch(e => console.log(e))
+    .catch(e => console.log(e.response.data.message));
 }
 
-export const fetchRemoveMeal = id => dispatch => {
-  axios.delete(`/api/own/${id}`)
+export const fetchUpdateMeal = (id, formData, token, cb) => dispatch => {
+  axios.patch(`/api/own/${id}`, formData, {
+    headers: { Authorization: token }
+  })
+    .then(({ data }) => {
+      alert('Рецепт успешно изменен');
+      dispatch(updateMeal({ id, meal: data }));
+      cb();
+    })
+    .catch(e => console.log(e.response));
+}
+
+export const fetchRemoveMeal = (id, token) => dispatch => {
+  axios.delete(`/api/own/${id}`, {
+    headers: { Authorization: token }
+  })
     .then(() => {
       alert('Рецепт успешно удален');
       dispatch(removeMeal(id));

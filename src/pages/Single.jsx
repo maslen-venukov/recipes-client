@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import queryString from 'query-string';
 
 import Tags from '../components/Tags';
@@ -16,6 +16,7 @@ const Single = () => {
   const { id } = useParams();
 
   const [youtubePreview, setYoutubePreview] = useState('');
+  const [imgSrc, setImgSrc] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
 
   const currentUser = useSelector(({ user }) => user.currentUser);
@@ -40,9 +41,14 @@ const Single = () => {
     setIsFavorite(isFinded);
   }, [favorites, id])
 
+  useEffect(() => {
+    const src = currentMeal && (!currentMeal.img.includes('http') ? `http://localhost:5000/${currentMeal.img}` : currentMeal.img);
+    setImgSrc(src);
+  }, [currentMeal])
+
   const onRemove = () => {
     if(window.confirm('Вы действительно хотите удалить рецепт?')) {
-      dispatch(fetchRemoveMeal(id));
+      dispatch(fetchRemoveMeal(id, token));
       history.push('/own');
     }
   }
@@ -52,7 +58,7 @@ const Single = () => {
       case true:
         if(window.confirm('Вы действительно хотите удалить рецепт из избранного?')) {
           const favoriteId = favorites.find(favorite => favorite.meal._id === id)._id;
-          dispatch(fetchRemoveFavorite(favoriteId));
+          dispatch(fetchRemoveFavorite(favoriteId, token));
         }
         break;
 
@@ -67,9 +73,6 @@ const Single = () => {
     }
   }
 
-  // TODO сделать редактирование рецепта
-  // TODO провалидировать добавление рецепта + сделать добавление картинки
-
   return (
     <section className="single">
       <div className="single__container container">
@@ -80,14 +83,14 @@ const Single = () => {
               {currentUser && currentMeal.user && currentUser.id === currentMeal.user.id
                 ? (
                   <div className="single__actions">
-                    <button className="single__edit btn">Редактировать</button>
+                    <Link to={`/edit/${id}`} className="single__edit btn">Редактировать</Link>
                     <button onClick={onRemove} className="single__remove btn">Удалить</button>
                   </div>
                 ) : currentMeal.user && `Автор: ${currentMeal.user.login}`}
             </header>
 
             <div className="single__img">
-              <img src={currentMeal.img} alt={currentMeal.name} />
+              <img src={imgSrc} alt={currentMeal.name} />
             </div>
 
             {currentUser && currentMeal.user && currentUser.id !== currentMeal.user.id && (
@@ -121,7 +124,7 @@ const Single = () => {
 
             {currentMeal.source && (
               <p className="single__source">
-                Source: <a href={currentMeal.source} target="_blank" rel="noreferrer" className="single__source-link">{currentMeal.source}</a>
+                Источник: <a href={currentMeal.source} target="_blank" rel="noreferrer" className="single__source-link">{currentMeal.source}</a>
               </p>
             )}
           </>

@@ -7,7 +7,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Single from './pages/Single';
 import Own from './pages/Own';
-import New from './pages/New';
+import Editor from './pages/Editor';
 import Favorites from './pages/Favorites';
 
 import Header from './components/Header';
@@ -36,7 +36,8 @@ const App = () => {
   const routes = {
     user: [
       { path: '/favorites', component: Favorites },
-      { path: '/new', component: New },
+      { path: '/new', component: Editor },
+      { path: '/edit/:id', component: Editor },
       { path: '/own', component: Own },
     ],
     auth: [

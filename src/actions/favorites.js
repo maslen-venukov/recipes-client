@@ -25,8 +25,10 @@ export const fetchFavorites = token => dispatch => {
     .catch(e => console.log(e))
 }
 
-export const fetchRemoveFavorite = id => dispatch => {
-  axios.delete(`/api/favorites/${id}`)
+export const fetchRemoveFavorite = (id, token) => dispatch => {
+  axios.delete(`/api/favorites/${id}`, {
+    headers: { Authorization: token }
+  })
     .then(() => {
       alert('Рецепт удален из избранного');
       dispatch(removeFavorite(id));
