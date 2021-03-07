@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Tags from './Tags';
 
-const Card = ({ id, img, name, category, area, tags, instructions, ingredients, measures, youtube, source }) => {
-  const user = useSelector(({ user }) => user.currentUser);
-
+const Card = ({ id, img, name, category, area, tags }) => {
   return (
     <article className="card">
       <Link to={`/meal/${id}`} className="card__img">
