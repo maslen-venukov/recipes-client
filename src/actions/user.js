@@ -1,17 +1,19 @@
 import axios from 'axios';
 
+import { SET_USER, SET_READY, LOGOUT } from '../reducers/user';
+
 export const setUser = payload => ({
-  type: 'SET_USER',
+  type: SET_USER,
   payload
 })
 
 export const setReady = payload => ({
-  type: 'SET_READY',
+  type: SET_READY,
   payload
 })
 
 export const logout = () => ({
-  type: 'LOGOUT'
+  type: LOGOUT
 })
 
 export const login = (login, password, cb) => dispatch => {

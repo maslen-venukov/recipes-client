@@ -1,3 +1,7 @@
+export const SET_USER = 'SET_USER';
+export const SET_READY = 'SET_READY';
+export const LOGOUT = 'LOGOUT';
+
 const initialState = {
   token: null,
   currentUser: null,
@@ -8,7 +12,7 @@ const user = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'SET_USER':
+    case SET_USER:
       localStorage.setItem('token', payload.token);
       return {
         ...state,
@@ -16,13 +20,13 @@ const user = (state = initialState, action) => {
         currentUser: payload.user
       }
 
-    case 'SET_READY':
+    case SET_READY:
       return {
         ...state,
         isReady: payload
       }
 
-    case 'LOGOUT':
+    case LOGOUT:
       localStorage.removeItem('token');
       return {
         ...state,
