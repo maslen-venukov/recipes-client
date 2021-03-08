@@ -9,6 +9,8 @@ import { fetchCurrentMeal, setCurrentMeal } from '../actions/meal';
 import { fetchRemoveMeal } from '../actions/own';
 import { fetchRemoveFavorite, fetchAddFavorite } from '../actions/favorites';
 
+import url from '../apiUrl';
+
 const Single = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -42,7 +44,7 @@ const Single = () => {
   }, [favorites, id])
 
   useEffect(() => {
-    const src = currentMeal && (!currentMeal.img.includes('http') ? `http://localhost:5000/${currentMeal.img}` : currentMeal.img);
+    const src = currentMeal && (!currentMeal.img.includes('http') ? `${url}/${currentMeal.img}` : currentMeal.img);
     setImgSrc(src);
   }, [currentMeal])
 
