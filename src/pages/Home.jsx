@@ -26,7 +26,7 @@ const Home = () => {
   const loadOnScroll = useCallback(() => {
     const scroll = window.pageYOffset + document.documentElement.clientHeight;
     const ratio = scroll / document.documentElement.scrollHeight;
-    +ratio.toFixed(2) === 0.95 && onLoad();
+    ratio > 0.99 && onLoad();
   }, [onLoad])
 
   const checkPageScroll = useCallback(() => {
