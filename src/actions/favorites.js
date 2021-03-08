@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { SET_FAVORITES, REMOVE_FAVORITE, ADD_FAVORITE } from '../reducers/favorites';
 
+import url from '../apiUrl';
+
 const setFavorites = payload => ({
   type: SET_FAVORITES,
   payload
@@ -18,7 +20,7 @@ const addFavorite = payload => ({
 })
 
 export const fetchFavorites = token => dispatch => {
-  axios.get('/api/favorites', {
+  axios.get(`${url}/api/favorites`, {
     headers: { Authorization: token }
   })
     .then(({ data }) => dispatch(setFavorites(data)))
@@ -26,7 +28,7 @@ export const fetchFavorites = token => dispatch => {
 }
 
 export const fetchRemoveFavorite = (id, token) => dispatch => {
-  axios.delete(`/api/favorites/${id}`, {
+  axios.delete(`${url}/api/favorites/${id}`, {
     headers: { Authorization: token }
   })
     .then(() => {
@@ -37,7 +39,7 @@ export const fetchRemoveFavorite = (id, token) => dispatch => {
 }
 
 export const fetchAddFavorite = (id, token) => dispatch => {
-  axios.post(`/api/favorites/${id}`, {}, {
+  axios.post(`${url}/api/favorites/${id}`, {}, {
     headers: { Authorization: token }
   })
     .then(({ data }) => {

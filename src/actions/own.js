@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { SET_OWN, CREATE_MEAL, REMOVE_MEAL, UPDATE_MEAL } from '../reducers/own';
 
+import url from '../apiUrl';
+
 const setOwn = payload => ({
   type: SET_OWN,
   payload
@@ -23,7 +25,7 @@ const updateMeal = payload => ({
 })
 
 export const fetchOwn = token => dispatch => {
-  axios.get('/api/own', {
+  axios.get(`${url}/api/own`, {
     headers: { Authorization: token }
   })
     .then(({ data }) => dispatch(setOwn(data)))
@@ -31,7 +33,7 @@ export const fetchOwn = token => dispatch => {
 }
 
 export const fetchCreateMeal = (formData, token, cb) => dispatch => {
-  axios.post('/api/own', formData, {
+  axios.post(`${url}/api/own`, formData, {
     headers: { Authorization: token }
   })
     .then(({ data }) => {
@@ -43,7 +45,7 @@ export const fetchCreateMeal = (formData, token, cb) => dispatch => {
 }
 
 export const fetchUpdateMeal = (id, formData, token, cb) => dispatch => {
-  axios.patch(`/api/own/${id}`, formData, {
+  axios.patch(`${url}/api/own/${id}`, formData, {
     headers: { Authorization: token }
   })
     .then(({ data }) => {
@@ -55,7 +57,7 @@ export const fetchUpdateMeal = (id, formData, token, cb) => dispatch => {
 }
 
 export const fetchRemoveMeal = (id, token) => dispatch => {
-  axios.delete(`/api/own/${id}`, {
+  axios.delete(`${url}/api/own/${id}`, {
     headers: { Authorization: token }
   })
     .then(() => {

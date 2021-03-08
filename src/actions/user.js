@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { SET_USER, SET_READY, LOGOUT } from '../reducers/user';
 
+import url from '../apiUrl';
+
 export const setUser = payload => ({
   type: SET_USER,
   payload
@@ -17,7 +19,7 @@ export const logout = () => ({
 })
 
 export const login = (login, password, cb) => dispatch => {
-  axios.post('/api/users/login', {
+  axios.post(`${url}/api/users/login`, {
     login, password
   })
     .then(({ data }) => {
@@ -28,7 +30,7 @@ export const login = (login, password, cb) => dispatch => {
 }
 
 export const register = (login, password, passwordCheck, cb) => dispatch => {
-  axios.post('/api/users/register', {
+  axios.post(`${url}/api/users/register`, {
     login, password, passwordCheck
   })
     .then(({ data }) => {
@@ -40,7 +42,7 @@ export const register = (login, password, passwordCheck, cb) => dispatch => {
 }
 
 export const auth = token => dispatch => {
-  axios.get('/api/users/auth', {
+  axios.get(`${url}/api/users/auth`, {
     headers: { Authorization: token }
   })
     .then(({ data }) => dispatch((setUser(data))))
